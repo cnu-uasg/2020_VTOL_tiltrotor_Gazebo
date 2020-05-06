@@ -1,0 +1,19 @@
+%% made by sejin
+폴더, 파일이름 처음 숫자 지우고 옮겨야 함.
+
+<Add the model in Gazebo>
+
+1. Tools/sitl_gazebo/models
+		+ Model
+
+2. Tools/sitl_gazebo/worlds
+		+ world
+
+3. ROMFS/px4fmu_common/mixer-sitl
+		+ mixer & Cmakelist
+
+4. ROMFS/px4fmu_common/init.d-posix
+		+ Model
+
+5. platforms/posix/cmake/sitl_target.cmake
+		+ Model name(line50~57)
