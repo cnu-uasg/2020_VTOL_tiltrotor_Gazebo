@@ -12,6 +12,12 @@ email : raoul7@naver.com
 6 : right elevon
 7 : left elevon
 - like E-flite convergence
+
+메모
+
+맥스 rpm 올려서 700인데 1700으로 셋
+모터 알피엠 너무 낮은듯
+
 --->
 
 <?xml version="1.0"?>
@@ -150,7 +156,7 @@ email : raoul7@naver.com
     
 
     <link name='motor_0'>
-      <pose>0.288 -0.5 0.02 0 0.7854 0</pose>
+      <pose>0.288 -0.554 0.02 0 0.7854 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
         <mass>0.005</mass>
@@ -218,7 +224,7 @@ email : raoul7@naver.com
 
 
     <link name='rotor_0'>
-      <pose>0.288 -0.5 0.02 0 0.7854 0</pose>
+      <pose>0.288 -0.554 0.02 0 0.7854 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
         <mass>0.005</mass>
@@ -285,7 +291,7 @@ email : raoul7@naver.com
     </joint>
 
     <link name='motor_1'>
-      <pose>0.288 0.5 0.02 0 0.7854 0</pose>
+      <pose>0.288 0.554 0.02 0 0.7854 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
         <mass>0.005</mass>
@@ -352,7 +358,7 @@ email : raoul7@naver.com
     </joint>
 
     <link name='rotor_1'>
-      <pose>0.288 0.5 0.02 0 0.7854 0</pose>
+      <pose>0.288 0.554 0.02 0 0.7854 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
         <mass>0.005</mass>
@@ -498,7 +504,7 @@ email : raoul7@naver.com
           <iyz>0.0</iyz>
           <izz>0.000001</izz>
         </inertia>
-        <pose>0 -0.6 0 0.00 0 0.0</pose>
+        <pose>0 -0.6 0 0 0 0</pose>
       </inertial>
       <visual name='right_elevon_visual'>
         <pose>0.281 -1.032 -0.034 1.5707963268 0 3.1415926536</pose>
@@ -546,24 +552,24 @@ email : raoul7@naver.com
       </visual>
     </link>
 
-    <link name="elevator">
+    <link name="right_elevator">
       <inertial>
-        <mass>0.00000001</mass>
+        <mass>0.00000000001</mass>
         <inertia>
-          <ixx>0.000001</ixx>
+          <ixx>0.000000001</ixx>
           <ixy>0.0</ixy>
-          <iyy>0.000001</iyy>
+          <iyy>0.000000001</iyy>
           <ixz>0.0</ixz>
           <iyz>0.0</iyz>
-          <izz>0.000001</izz>
+          <izz>0.000000001</izz>
         </inertia>
-        <pose> -0.5 0 0 0 0 0</pose>
+        <pose> 0 0 0 0 0 0</pose>
       </inertial>
-      <visual name='elevator_visual'>
-        <pose>-0.6 0 0 0 0 0</pose>
+      <visual name='right_elevator_visual'>
+        <pose>-1 -1 0 0 0 0</pose>
         <geometry>
           <box>
-            <size>0.2 0.4 0.01</size>
+            <size>0.2 0.2 0.01</size>
           </box>
         </geometry>
         <material>
@@ -573,8 +579,37 @@ email : raoul7@naver.com
           </script>
         </material>
       </visual>
-
     </link>
+
+    <link name="left_elevator">
+      <inertial>
+        <mass>0.000000000001</mass>
+        <inertia>
+          <ixx>0.000000001</ixx>
+          <ixy>0.0</ixy>
+          <iyy>0.000000001</iyy>
+          <ixz>0.0</ixz>
+          <iyz>0.0</iyz>
+          <izz>0.000000001</izz>
+        </inertia>
+        <pose> 0 0 0 0 0 0</pose>
+      </inertial>
+      <visual name='left_elevator_visual'>
+        <pose>-1 1 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.2 0.2 0.01</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Blue</name>
+            <uri>__default__</uri>
+          </script>
+        </material>
+      </visual>
+    </link>
+
     <joint name='left_elevon_joint' type='revolute'>
       <parent>base_link</parent>
       <child>left_elevon</child>
@@ -586,7 +621,7 @@ email : raoul7@naver.com
           <lower>-0.53</lower>
           <upper>0.53</upper>
         </limit>
-               <dynamics>
+        <dynamics>
           <damping>1.000</damping>
         </dynamics>
       </axis>
@@ -618,10 +653,31 @@ email : raoul7@naver.com
       </physics>
     </joint>
 
-    <joint name='elevator_joint' type='revolute'>
+    <joint name='right_elevator_joint' type='revolute'>
       <parent>base_link</parent>
-      <child>elevator</child>
-      <pose> -0.5 0 0 0 0 0</pose>
+      <child>right_elevator</child>
+      <pose> -0.9 0 0 0 0 0</pose>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <!-- -30/+30 deg. -->
+          <lower>-0.53</lower>
+          <upper>0.53</upper>
+        </limit>
+        <dynamics>
+          <damping>1.000</damping>
+        </dynamics>
+      </axis>
+      <physics>
+        <ode>
+          <implicit_spring_damper>1</implicit_spring_damper>
+        </ode>
+      </physics>
+    </joint>
+    <joint name='left_elevator_joint' type='revolute'>
+      <parent>base_link</parent>
+      <child>left_elevator</child>
+      <pose> -0.9 0 0 0 0 0</pose>
       <axis>
         <xyz>0 1 0</xyz>
         <limit>
@@ -781,13 +837,13 @@ email : raoul7@naver.com
     
 <!---plugin--->
     <plugin name="left_wing" filename="libLiftDragPlugin.so">
-      <a0>0.0349</a0>
-      <cla>4.871</cla>
-      <cda>1.719</cda>
-      <cma>-0.00008725</cma>
+      <a0>-0.0349</a0>
+      <cla>3.7013</cla>
+      <cda>0.4641</cda>
+      <cma>-0.911</cma>
       <alpha_stall>0.31</alpha_stall>
-      <cla_stall>-3.85</cla_stall>
-      <cda_stall>-0.9233984055</cda_stall>
+      <cla_stall>-3.8388</cla_stall>
+      <cda_stall>-0.9282</cda_stall>
       <cma_stall>0</cma_stall>
       <cp>-0.062 0.554 0.05</cp>
       <area>0.2455</area>
@@ -798,16 +854,16 @@ email : raoul7@naver.com
       <control_joint_name>
         left_elevon_joint
       </control_joint_name>
-      <control_joint_rad_to_cl>-0.45845</control_joint_rad_to_cl>
+      <control_joint_rad_to_cl>-0.2578</control_joint_rad_to_cl>
     </plugin>
     <plugin name="right_wing" filename="libLiftDragPlugin.so">
-      <a0>0.0349</a0>
-      <cla>4.871</cla>
-      <cda>1.719</cda>
-      <cma>-0.00008725</cma>
+      <a0>-0.0349</a0>
+      <cla>3.7013</cla>
+      <cda>0.4641</cda>
+      <cma>-0.911</cma>
       <alpha_stall>0.31</alpha_stall>
-      <cla_stall>-3.85</cla_stall>
-      <cda_stall>-0.9233984055</cda_stall>
+      <cla_stall>-3.8388</cla_stall>
+      <cda_stall>-0.9282</cda_stall>
       <cma_stall>0</cma_stall>
       <cp>-0.062 -0.554 0.05</cp>
       <area>0.2455</area>
@@ -818,28 +874,49 @@ email : raoul7@naver.com
       <control_joint_name>
         right_elevon_joint
       </control_joint_name>
-      <control_joint_rad_to_cl>-0.45845</control_joint_rad_to_cl>
+      <control_joint_rad_to_cl>-0.2578</control_joint_rad_to_cl>
     </plugin>
 
-    <plugin name="elevator" filename="libLiftDragPlugin.so">
-      <a0>-0.2</a0>
-      <cla>4.752798721</cla>
-      <cda>0.6417112299</cda>
-      <cma>-1.8</cma>
-      <alpha_stall>0.3391428111</alpha_stall>
-      <cla_stall>-3.85</cla_stall>
-      <cda_stall>-0.9233984055</cda_stall>
+    <plugin name="right_elevator" filename="libLiftDragPlugin.so">
+      <a0>0</a0>
+      <cla>0</cla>
+      <cda>0</cda>
+      <cma>0</cma>
+      <alpha_stall>0.5</alpha_stall>
+      <cla_stall>0</cla_stall>
+      <cda_stall>0</cda_stall>
       <cma_stall>0</cma_stall>
-      <cp>-0.5 0 0</cp>
-      <area>0.01</area>
+      <cp>-1 0 0</cp>
+      <area>0.02</area>
       <air_density>1.2041</air_density>
       <forward>1 0 0</forward>
       <upward>0 0 1</upward>
       <link_name>base_link</link_name>
       <control_joint_name>
-        elevator_joint
+        right_elevator_joint
       </control_joint_name>
-      <control_joint_rad_to_cl>-12.0</control_joint_rad_to_cl>
+      <control_joint_rad_to_cl>-1.4</control_joint_rad_to_cl>
+    </plugin>
+
+    <plugin name="left_elevator" filename="libLiftDragPlugin.so">
+      <a0>0</a0>
+      <cla>0</cla>
+      <cda>0</cda>
+      <cma>0</cma>
+      <alpha_stall>0.5</alpha_stall>
+      <cla_stall>0</cla_stall>
+      <cda_stall>0</cda_stall>
+      <cma_stall>0</cma_stall>
+      <cp>-1 0 0</cp>
+      <area>0.015</area>
+      <air_density>1.2041</air_density>
+      <forward>1 0 0</forward>
+      <upward>0 0 1</upward>
+      <link_name>base_link</link_name>
+      <control_joint_name>
+        left_elevator_joint
+      </control_joint_name>
+      <control_joint_rad_to_cl>-1.4</control_joint_rad_to_cl>
     </plugin>
 
     <plugin name="vertical_tail" filename="libLiftDragPlugin.so">
@@ -852,7 +929,7 @@ email : raoul7@naver.com
       <cda_stall>-0.9233984055</cda_stall>
       <cma_stall>0</cma_stall>
       <cp>-0.5 0 0.05</cp>
-      <area>0.02</area>
+      <area>0.015</area>
       <air_density>1.2041</air_density>
       <forward>1 0 0</forward>
       <upward>0 1 0</upward>
@@ -867,12 +944,12 @@ email : raoul7@naver.com
       <turningDirection>ccw</turningDirection>
       <timeConstantUp>0.0125</timeConstantUp>
       <timeConstantDown>0.025</timeConstantDown>
-      <maxRotVelocity>706</maxRotVelocity>
-      <motorConstant>8.6e-05</motorConstant>
-      <momentConstant>0.02808</momentConstant>
+      <maxRotVelocity>1688</maxRotVelocity>
+      <motorConstant>0.0000868307</motorConstant>
+      <momentConstant>0.06</momentConstant>
       <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
       <motorNumber>0</motorNumber>
-      <rotorDragCoefficient>0.0002</rotorDragCoefficient>
+      <rotorDragCoefficient>0.000806</rotorDragCoefficient>
       <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
       <motorSpeedPubTopic>/motor_speed/0</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>50</rotorVelocitySlowdownSim>
@@ -884,12 +961,12 @@ email : raoul7@naver.com
       <turningDirection>cw</turningDirection>
       <timeConstantUp>0.0125</timeConstantUp>
       <timeConstantDown>0.025</timeConstantDown>
-      <maxRotVelocity>706</maxRotVelocity>
-      <motorConstant>8.6e-05</motorConstant>
-      <momentConstant>0.02808</momentConstant>
+      <maxRotVelocity>1688</maxRotVelocity>
+      <motorConstant>0.0000868307</motorConstant>
+      <momentConstant>0.06</momentConstant>
       <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
       <motorNumber>1</motorNumber>
-      <rotorDragCoefficient>0.0002</rotorDragCoefficient>
+      <rotorDragCoefficient>0.000806</rotorDragCoefficient>
       <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
       <motorSpeedPubTopic>/motor_speed/1</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>50</rotorVelocitySlowdownSim>
@@ -901,12 +978,12 @@ email : raoul7@naver.com
       <turningDirection>ccw</turningDirection>
       <timeConstantUp>0.0125</timeConstantUp>
       <timeConstantDown>0.025</timeConstantDown>
-      <maxRotVelocity>706</maxRotVelocity>
-      <motorConstant>8.6e-05</motorConstant>
-      <momentConstant>0.02808</momentConstant>
+      <maxRotVelocity>1688</maxRotVelocity>
+      <motorConstant>0.0000868307</motorConstant>
+      <momentConstant>0.06</momentConstant>
       <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
       <motorNumber>2</motorNumber>
-      <rotorDragCoefficient>0.0002</rotorDragCoefficient>
+      <rotorDragCoefficient>0.000806</rotorDragCoefficient>
       <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
       <motorSpeedPubTopic>/motor_speed/2</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>50</rotorVelocitySlowdownSim>
@@ -1056,15 +1133,25 @@ email : raoul7@naver.com
           <joint_control_type>position_kinematic</joint_control_type>
           <joint_name>left_elevon_joint</joint_name>
         </channel>
-			 <channel name="elevator">
+			 <channel name="right_elevator">
           <input_index>8</input_index>
           <input_offset>0</input_offset>
           <input_scaling>1</input_scaling>
           <zero_position_disarmed>0</zero_position_disarmed>
           <zero_position_armed>0</zero_position_armed>
           <joint_control_type>position_kinematic</joint_control_type>
-          <joint_name>elevator_joint</joint_name>
+          <joint_name>right_elevator_joint</joint_name>
       	 </channel>
+			 <channel name="left_elevator">
+          <input_index>9</input_index>
+          <input_offset>0</input_offset>
+          <input_scaling>1</input_scaling>
+          <zero_position_disarmed>0</zero_position_disarmed>
+          <zero_position_armed>0</zero_position_armed>
+          <joint_control_type>position_kinematic</joint_control_type>
+          <joint_name>left_elevator_joint</joint_name>
+      	 </channel>
+
 <!---
 				 <channel name="right_flap">
           <input_index>9</input_index>
@@ -1092,9 +1179,12 @@ email : raoul7@naver.com
       <left_elevon_joint>
         left_elevon_joint
       </left_elevon_joint>
-      <elevator_joint>
-        elevator_joint
-      </elevator_joint>
+      <right_elevator_joint>
+        right_elevator_joint
+      </right_elevator_joint>
+      <left_elevator_joint>
+        left_elevator_joint
+      </left_elevator_joint>
     </plugin>
     <static>0</static>
   </model>
